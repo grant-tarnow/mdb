@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mdb search</title>
+  <link rel="stylesheet" href="app.css" />
+</head>
+<body>
+
+  <header>
+
+    <h1>Mentorship Database</h1>
+
+    <nav>
+      <a class="navLink" href="/">Home</a>
+      <a class="navLink" href="/add-volunteer">Add Volunteer</a>
+      <a class="navLink" href="/add-student">Add Student</a>
+      <a class="navLink" href="/new-rel">Add relationship</a>
+      <a class="navLink" href="#">Bulk entry</a>
+      
+    </nav>
+
+  </header>
+
+  <h1>Search results for "<%= searchName %>".</h1>
+
+  <h2>Volunteers:</h2>
+
+  <% for (let i = 0; i < volNames.length; i++) { %>
+    <p>
+      <form method="post" action="/profile">
+      <input type="hidden" name="type" value="vol" />
+      <input type="hidden" name="id" value="<%= volNames[i].id %>" />
+      <a onclick="this.parentNode.submit();"><%= `${volNames[i].fname} ${volNames[i].lname}` %></a>
+      </form>
+    </p>
+  <% } %>
+
+  <h2>Students:</h2>
+
+  <% for (let i = 0; i < stuNames.length; i++) { %>
+    <p>
+      <form method="post" action="/profile">
+      <input type="hidden" name="type" value="stu" />
+      <input type="hidden" name="id" value="<%= stuNames[i].id %>" />
+      <a onclick="this.parentNode.submit();"><%= `${stuNames[i].fname} ${stuNames[i].lname}` %></a>
+      </form>
+    </p>
+  <% } %>
+  
+  
+  
+</body>
+</html>

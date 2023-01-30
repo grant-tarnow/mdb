@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>mdb</title>
+    <link rel="stylesheet" href="app.css" />
+
+    <!-- <script src="index.js"></script> -->
+
+  </head>
+  <body>
+
+    <header>
+
+      <h1>Mentorship Database</h1>
+
+      <nav>
+        <a class="navLink" href="/">Home</a>
+        <a class="navLink" href="/add-volunteer">Add Volunteer</a>
+        <a class="navLink" href="/add-student">Add Student</a>
+        <a class="navLink" href="/new-rel">Add relationship</a>
+        <a class="navLink" href="#">Bulk entry</a>
+        
+      </nav>
+
+    </header>
+
+    <main>
+
+      <h1>Welcome to the Mentorship Database!</h1>
+
+      <p>
+        Use the buttons in the top nav bar to do stuff.<br/>
+        <br/>
+        Use the search bar below to search for people.
+      </p>
+
+      <form method="POST" action="/search">
+        <input type="text" class="form" name="searchName" placeholder="Search a name...">
+        <button>Search!</button>
+      </form>
+
+    </main>
+
+  </body>
+</html>

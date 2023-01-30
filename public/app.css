@@ -1,0 +1,25 @@
+header * {
+  display: inline;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.ACTIVE {
+  color: green;
+}
+
+.INACTIVE {
+  color: red;
+}
+
+.form-block {
+  display: block;
+}
+
+.form-div {
+  margin-bottom: 20px;
+}

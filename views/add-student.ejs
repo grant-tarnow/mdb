@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>mdb</title>
+    <link rel="stylesheet" href="app.css" />
+
+  </head>
+  <body>
+
+    <header>
+
+      <h1>Mentorship Database</h1>
+
+      <nav>
+        <a class="navLink" href="/">Home</a>
+        <a class="navLink" href="/add-volunteer">Add Volunteer</a>
+        <a class="navLink" href="/add-student">Add Student</a>
+        <a class="navLink" href="/new-rel">Add relationship</a>
+        <a class="navLink" href="#">Bulk entry</a>
+        
+      </nav>
+
+    </header>
+
+    <main>
+
+      <h2>Add a student:</h2>
+
+      <form method="POST" action="/add-student">
+
+        <div class="form-div">
+          <label for="fname">First Name</label>
+          <input type="text" class="form-block" id="fname" name="fname" required="true" placeholder="First">
+        </div>
+
+        <div class="form-div">
+          <label for="lname">Last Name</label>
+          <input type="text" class="form-block" id="lname" name="lname" required="true" placeholder="Last">
+        </div>
+
+        <div class="form-div">
+          <label for="phone">Phone number</label>
+          <input type="text" class="form-block" id="phone" name="phone" required="true" placeholder="###-###-####">
+        </div>
+
+        <div class="form-div">
+          <label for="email">Email address</label>
+          <input type="email" class="form-block" id="email" name="email" required="true" placeholder="example@domain.com">
+        </div>
+
+        <div class="form-div">
+          <label for="street">Street address</label>
+          <input type="text" class="form-block" id="street" name="street" required="true" placeholder="123 S State St.">
+        </div>
+
+        <div class="form-div">
+          <label for="city">City</label>
+          <input type="text" class="form-block" id="city" name="city" required="true" placeholder="" value="Chicago">
+        </div>
+
+        <div class="form-div">
+          <label for="usstate">State (XX)</label>
+          <input type="text" class="form-block" id="usstate" name="usstate" required="true" placeholder="Enter a 2-letter state code" value="IL">
+        </div>
+
+        <div class="form-div">
+          <label for="church">Church</label>
+          <input type="text" class="form-block" id="church" name="church" placeholder="This person attends...">
+        </div>
+
+        <div class="form-div">
+          <label for="school">School</label>
+          <input type="text" class="form-block" id="school" name="school" placeholder="This person attends...">
+        </div>
+
+        <div class="form-div">
+          <label for="location">Location</label>
+          <input type="text" class="form-block" id="location" name="location" placeholder="">
+        </div>
+
+        <div class="form-div">
+          <label for="team">Team</label>
+          <input type="text" class="form-block" id="team" name="team" placeholder="">
+        </div>
+
+        <div class="form-div">
+          <label for="notes">Notes</label>
+          <textarea rows = "5" cols="80" class="form-block" id="notes" name="notes" placeholder=""></textarea>
+        </div>
+
+        <div class="form-div">
+          <input type="radio" id="active" name="is_active" placeholder="" value="1" checked>
+          <label for="active">Active</label>
+          </br>
+          <input type="radio" id="inactive" name="is_active" placeholder="" value="0">
+          <label for="inactive">Inactive</label>
+        </div>
+
+        <div class="form-div">
+          <input type="radio" id="in_school" name="is_graduated" placeholder="" value="0" checked>
+          <label for="in_school">In school</label>
+          </br>
+          <input type="radio" id="graduated" name="is_graduated" placeholder="" value="1">
+          <label for="graduated">Graduated</label>
+        </div>
+
+        <button>Add Person!</button>
+      </form>
+
+    </main>
+
+  </body>
+</html>
