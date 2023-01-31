@@ -168,6 +168,50 @@ app.post("/edit-profile-submission", function(req, res){
 
 });
 
+app.get("/new-rel", function(req, res){
+  console.log("New relationship request.");
+  res.render("add-rel");
+});
+
+app.post("/search-for-rel", function(req, res){
+  console.log("Names searched for new relationship.");
+
+  const volName = req.body.volName;
+  const stuName = req.body.stuName;
+
+  const findVols = db.prepare("SELECT id, fname, lname FROM volunteers WHERE fname || ' ' || lname LIKE ? ORDER BY fname ASC");
+  const findStus = db.prepare("SELECT id, fname, lname FROM students WHERE fname || ' ' || lname LIKE ? ORDER BY fname ASC");
+
+  const volNames = findVols.all(`%${volName}%`);
+  const stuNames = findStus.all(`%${stuName}%`);
+
+  if (volNames.length === 0 || stuNames.length === 0){
+    res.render("upload", {msg: "Oops! That search came up empty. Please try again."});
+  } else {
+    res.render("confirm-rel", {volNames: volNames, stuNames: stuNames});
+  }
+
+});
+
+app.post("/submit-rel", function(req, res){
+  console.log("New relationship submitted");
+
+  const newRel = req.body;
+
+  let msg = "Oops! Something went wrong with the data you sent.";
+
+  const addRel = db.prepare("INSERT INTO relationships (mentor_id, student_id, stage) VALUES (@vol_id, @stu_id, @stage)");
+  const result = addRel.run(newRel);
+  
+  if (Object.keys(result).length === 2) {
+    msg = "Relationship successfully added!";
+  } else {
+    msg = "Oops! Something went wrong, and the update failed.";
+  }
+
+  res.render("upload", {msg: msg});
+});
+
 // Server
 app.listen(port, function(){
     console.log(`Server running on ${port}!`)

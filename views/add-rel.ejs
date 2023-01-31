@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>mdb</title>
+    <link rel="stylesheet" href="app.css" />
+
+  </head>
+  <body>
+
+    <header>
+
+      <h1>Mentorship Database</h1>
+
+      <nav>
+        <a class="navLink" href="/">Home</a>
+        <a class="navLink" href="/add-volunteer">Add Volunteer</a>
+        <a class="navLink" href="/add-student">Add Student</a>
+        <a class="navLink" href="/new-rel">Add relationship</a>
+        <a class="navLink" href="#">Bulk entry</a>
+        
+      </nav>
+
+    </header>
+
+    <main>
+
+      <h2>Find people for relationship</h2>
+
+      <form method="POST" action="/search-for-rel">
+
+        <div class="form-div">
+          <label for="fname">Volunteer name</label>
+          <input type="text" class="form-block" id="volName" name="volName" required="true" placeholder="Search for a volunteer...">
+        </div>
+
+        <div class="form-div">
+          <label for="fname">Student name</label>
+          <input type="text" class="form-block" id="stuName" name="stuName" required="true" placeholder="Search for a student...">
+        </div>
+
+        <button>Find people!</button>
+      </form>
+
+    </main>
+
+  </body>
+</html>

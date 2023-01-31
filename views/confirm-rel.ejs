@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>mdb</title>
+    <link rel="stylesheet" href="app.css" />
+
+  </head>
+  <body>
+
+    <header>
+
+      <h1>Mentorship Database</h1>
+
+      <nav>
+        <a class="navLink" href="/">Home</a>
+        <a class="navLink" href="/add-volunteer">Add Volunteer</a>
+        <a class="navLink" href="/add-student">Add Student</a>
+        <a class="navLink" href="/new-rel">Add relationship</a>
+        <a class="navLink" href="#">Bulk entry</a>
+        
+      </nav>
+
+    </header>
+
+    <main>
+
+      <form method="POST" action="/submit-rel">
+
+        <h2>Volunteer</h2>
+        <div class="form-div">
+          <% for (let i = 0; i < volNames.length; i++) { %>
+            <input type="radio" id="vol_<%= volNames[i].id %>" name="vol_id" placeholder="" value="<%= volNames[i].id %>">
+            <label for="vol_<%= volNames[i].id %>"><%= `${volNames[i].fname} ${volNames[i].lname}` %></label>
+            </br>
+          <% } %>
+        </div>
+
+        <h2>Student</h2>
+        <div class="form-div">
+          <% for (let i = 0; i < stuNames.length; i++) { %>
+            <input type="radio" id="stu_<%= stuNames[i].id %>" name="stu_id" placeholder="" value="<%= stuNames[i].id %>">
+            <label for="stu_<%= stuNames[i].id %>"><%= `${stuNames[i].fname} ${stuNames[i].lname}` %></label>
+            </br>
+          <% } %>
+        </div>
+
+        <h2>Stage</h2>
+        <div class="form-div">
+          <label for="stage">Choose a stage:</label>
+          <select name="stage" class="form-block" id="stage">
+            <option value="undefined">Undefined</option>
+            <option value="connected">Connected</option>
+            <option value="building">Building</option>
+            <option value="life-on-life">Life-on-life</option>
+          </select>
+        </div>
+
+        <button>Confirm relationship!</button>
+
+      </form>
+
+    </main>
+
+  </body>
+</html>
