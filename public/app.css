@@ -16,8 +16,20 @@ a {
   color: red;
 }
 
+.Graduated {
+  color: green;
+}
+
+.In_school {
+  color: blue;
+}
+
 .form-block {
   display: block;
+}
+
+.form-inline {
+  display: inline;
 }
 
 .form-div {

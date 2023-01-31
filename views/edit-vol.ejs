@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>mdb</title>
+    <link rel="stylesheet" href="app.css" />
+
+  </head>
+  <body>
+
+    <header>
+
+      <h1>Mentorship Database</h1>
+
+      <nav>
+        <a class="navLink" href="/">Home</a>
+        <a class="navLink" href="/add-volunteer">Add Volunteer</a>
+        <a class="navLink" href="/add-student">Add Student</a>
+        <a class="navLink" href="/new-rel">Add relationship</a>
+        <a class="navLink" href="#">Bulk entry</a>
+        
+      </nav>
+
+    </header>
+
+    <main>
+
+      <h2>Edit <%= `${profile.fname} ${profile.lname}` %>:</h2>
+
+      <form method="POST" action="/edit-profile-submission">
+
+        <input type="hidden" name="type" value="vol" />
+        <input type="hidden" name="id" value="<%= profile.id %>" />
+
+        <div class="form-div">
+          <label for="fname">First Name</label>
+          <input type="text" class="form-block" id="fname" name="fname" required="true" placeholder="First" value="<%= profile.fname %>">
+        </div>
+
+        <div class="form-div">
+          <label for="lname">Last Name</label>
+          <input type="text" class="form-block" id="lname" name="lname" required="true" placeholder="Last" value="<%= profile.lname %>">
+        </div>
+
+        <div class="form-div">
+          <label for="phone">Phone number</label>
+          <input type="text" class="form-block" id="phone" name="phone" required="true" placeholder="###-###-####" value="<%= profile.phone %>">
+        </div>
+
+        <div class="form-div">
+          <label for="email">Email address</label>
+          <input type="email" class="form-block" id="email" name="email" required="true" placeholder="example@domain.com" value="<%= profile.email %>">
+        </div>
+
+        <div class="form-div">
+          <label for="street">Street address</label>
+          <input type="text" class="form-block" id="street" name="street" required="true" placeholder="123 S State St." value="<%= profile.street %>">
+        </div>
+
+        <div class="form-div">
+          <label for="city">City</label>
+          <input type="text" class="form-block" id="city" name="city" required="true" placeholder=""  value="<%= profile.city %>">
+        </div>
+
+        <div class="form-div">
+          <label for="usstate">State (XX)</label>
+          <input type="text" class="form-block" id="usstate" name="usstate" required="true" placeholder="Enter a 2-letter state code"  value="<%= profile.usstate %>">
+        </div>
+
+        <div class="form-div">
+          <label for="church">Church</label>
+          <input type="text" class="form-block" id="church" name="church" placeholder="This person attends..." value="<%= profile.church %>">
+        </div>
+
+        <div class="form-div">
+          <label for="location">Location</label>
+          <select name="location" class="form-block" id="location" value="<%= profile.location %>">
+            <option value="Unassigned">Unassigned</option>
+            <option value="Central" <% if (profile.location === "Central") { %><%= "selected" %><% } %>>Central</option>
+            <option value="West" <% if (profile.location === "West") { %><%= "selected" %><% } %>>West</option>
+            <option value="Northwest" <% if (profile.location === "Northwest") { %><%= "selected" %><% } %>>Northwest</option>
+          </select>
+        </div>
+        
+        <div class="form-div">
+          <label for="team">Team</label>
+          <select name="team" class="form-block" id="team" value="<%= profile.team %>">
+            <option value="Unassigned">Unassigned</option>
+            <option value="Blue" <% if (profile.team === "Blue") { %><%= "selected" %><% } %>>Blue</option>
+            <option value="Green" <% if (profile.team === "Green") { %><%= "selected" %><% } %>>Green</option>
+            <option value="Orange" <% if (profile.team === "Orange") { %><%= "selected" %><% } %>>Orange</option>
+            <option value="Red" <% if (profile.team === "Red") { %><%= "selected" %><% } %>>Red</option>
+          </select>
+        </div>
+
+        <div class="form-div">
+          <label for="notes">Notes</label>
+          <textarea rows = "5" cols="80" class="form-block" id="notes" name="notes" placeholder=""><%= profile.notes %></textarea>
+        </div>
+
+        <div class="form-div">
+          <input type="radio" id="active" name="is_active" placeholder="" value="1" 
+            <% if (profile.is_active === 1) { %>
+              <%= "checked" %>
+            <% } %>
+          >
+          <label for="active">Active</label>
+          </br>
+          <input type="radio" id="inactive" name="is_active" placeholder="" value="0"
+            <% if (profile.is_active === 0) { %>
+              <%= "checked" %>
+            <% } %>
+          >
+          <label for="inactive">Inactive</label>
+        </div>
+
+        <button>Edit Person!</button>
+      </form>
+
+    </main>
+
+  </body>
+</html>

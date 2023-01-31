@@ -25,7 +25,13 @@
 
     <main>
 
-      <h1><%= `${profile.fname} ${profile.lname}` %> | <a href="#">Edit</a></h1>
+      <h1><%= `${profile.fname} ${profile.lname}` %> | 
+        <form method="POST" action="/edit-profile" class="form-inline">
+          <input type="hidden" name="type" value="vol" />
+          <input type="hidden" name="id" value="<%= profile.id %>" />
+          <a onclick="this.parentNode.submit();">Edit</a>
+        </form>
+      </h1>
           <h2>Volunteer | <span class='<%= profile.is_active %>'><%= profile.is_active %></span></h2>
           <div class='contact'>
             <h4>Phone</h4>
@@ -42,7 +48,7 @@
             <p><%= profile.team %></p>
           </div>
           <div class="relationships">
-            <h2>Students:</h2>
+            <h2>Students</h2>
             <% for (let i = 0; i < rels.length; i++) { %>
               <p>
                 <form method="post" action="/profile">
@@ -55,7 +61,7 @@
             <% } %>
           </div>
           <div class="notes">
-            <h4>Notes</h4>
+            <h2>Notes</h2>
             <p><%= profile.notes %></p>
           </div>
 

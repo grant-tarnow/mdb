@@ -46,7 +46,7 @@ app.post("/profile", function(req, res){
   let getProfile;
   let getRels;
 
-  if (type === "vol") { // note the AS rel_id to allow client-side templating to be agnostic.
+  if (type === "vol") {
     getProfile = db.prepare("SELECT * FROM volunteers WHERE id = ?");
     getRels = db.prepare("SELECT student_id, stage, fname, lname FROM relationships JOIN students ON relationships.student_id = students.id WHERE relationships.mentor_id = ?");
   } else if (type === "stu") {
@@ -61,6 +61,17 @@ app.post("/profile", function(req, res){
     profile.is_active = "ACTIVE"
   } else {
     profile.is_active = "INACTIVE"
+  }
+
+  switch (profile.is_graduated) {
+    case undefined:
+      break;
+    case 1:
+      profile.is_graduated = "Graduated";
+      break;
+    case 0:
+      profile.is_graduated = "In_school";
+      break;
   }
 
   res.render(`${type}-profile`, {profile: profile, rels: rels});
@@ -111,6 +122,50 @@ app.post("/add-student", function(req, res){
   }
 
   res.render("upload", {msg: msg});
+
+});
+
+app.post("/edit-profile", function(req, res){
+  console.log("Edit profile form requested");
+
+  const type = req.body.type;
+  const id = req.body.id;
+
+  let getProfile;
+  if (type === "vol") {
+    getProfile = db.prepare("SELECT * FROM volunteers WHERE id = ?");
+  } else if (type === "stu") {
+    getProfile = db.prepare("SELECT * FROM students WHERE id = ?");
+  }
+
+  const profile = getProfile.get(id);
+
+  res.render(`edit-${type}`, {profile: profile});
+
+});
+
+app.post("/edit-profile-submission", function(req, res){
+  console.log("Edit volunteer request posted");
+  
+  const edit = req.body;
+  let updatePerson;
+
+  if (edit.type === "vol") {
+    updatePerson = db.prepare("UPDATE volunteers SET fname = @fname, lname = @lname, phone = @phone, email = @email, street = @street, city = @city, usstate = @usstate, church = @church, location = @location, team = @team, notes = @notes, is_active = @is_active WHERE id = @id");
+  } else if (edit.type === "stu") {
+    updatePerson = db.prepare("UPDATE students SET fname = @fname, lname = @lname, phone = @phone, email = @email, street = @street, city = @city, usstate = @usstate, church = @church, school = @school, location = @location, team = @team, notes = @notes, is_active = @is_active, is_graduated = @is_graduated WHERE id = @id");
+  }
+
+  const result = updatePerson.run(edit);
+
+  if (Object.keys(result).length === 2) {
+    msg = "Update successful!";
+  } else {
+    msg = "Oops! Something went wrong, and the update failed.";
+  }
+
+  res.render("upload", {msg: msg});
+
 });
 
 // Server
