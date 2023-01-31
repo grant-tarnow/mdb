@@ -212,6 +212,48 @@ app.post("/submit-rel", function(req, res){
   res.render("upload", {msg: msg});
 });
 
+app.post("/edit-rel", function(req, res){
+  console.log("Edit relationship form request.");
+
+  const rel_req = req.body;
+
+  pullRel = db.prepare("SELECT volunteers.fname || ' ' || volunteers.lname AS volName, students.fname || ' ' || students.lname AS stuName, mentor_id AS vol_id, student_id AS stu_id, stage FROM volunteers JOIN relationships ON volunteers.id = relationships.mentor_id JOIN students ON relationships.student_id = students.id WHERE mentor_id = @vol_id AND student_id = @stu_id");
+  rel = pullRel.get(rel_req);
+
+  res.render("edit-rel", {rel: rel});
+
+});
+
+app.post("/submit-edit-rel", function(req, res){
+  console.log("Edit relationship confirmed.");
+
+  const update = req.body;
+
+  let updateRel;
+  if (update.stage === "REMOVE") {
+    updateRel = db.prepare("DELETE FROM relationships WHERE mentor_id = @vol_id AND student_id = @stu_id");
+  } else {
+    updateRel = db.prepare("UPDATE relationships SET stage = @stage WHERE mentor_id = @vol_id AND student_id = @stu_id");
+  }
+
+  const result = updateRel.run(update);
+
+  let msg;
+  if (Object.keys(result).length === 2) {
+
+    if (update.stage === "REMOVE") {
+      msg = "Relationship successfully removed.";
+    } else {
+      msg = `Relationship stage succesfully updated to "${update.stage}"!`;
+    }
+
+  } else {
+    msg = "Oops! Something went wrong, and the update failed.";
+  }
+
+  res.render("upload", {msg: msg});
+});
+
 // Server
 app.listen(port, function(){
     console.log(`Server running on ${port}!`)

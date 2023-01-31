@@ -52,11 +52,17 @@
             <h2>Mentor(s)</h2>
             <% for (let i = 0; i < rels.length; i++) { %>
               <p>
-                <form method="post" action="/profile">
-                <input type="hidden" name="type" value="vol" />
-                <input type="hidden" name="id" value="<%= rels[i].mentor_id %>" />
-                <a onclick="this.parentNode.submit();"><%= `${rels[i].fname} ${rels[i].lname}` %></a>
-                 | <%= rels[i].stage %>
+                <form method="post" action="/profile" class="form-inline">
+                  <input type="hidden" name="type" value="vol" />
+                  <input type="hidden" name="id" value="<%= rels[i].mentor_id %>" />
+                  <a onclick="this.parentNode.submit();"><%= `${rels[i].fname} ${rels[i].lname}` %></a>
+                  | <%= rels[i].stage %>
+                </form>
+                | 
+                <form method="post" action="/edit-rel" class="form-inline">
+                  <input type="hidden" name="stu_id" value="<%= profile.id %>" />
+                  <input type="hidden" name="vol_id" value="<%= rels[i].mentor_id %>" />
+                  <a onclick="this.parentNode.submit();">Edit</a>
                 </form>
               </p>
             <% } %>

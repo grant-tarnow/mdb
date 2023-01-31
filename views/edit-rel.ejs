@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>mdb</title>
+    <link rel="stylesheet" href="app.css" />
+
+  </head>
+  <body>
+
+    <header>
+
+      <h1>Mentorship Database</h1>
+
+      <nav>
+        <a class="navLink" href="/">Home</a>
+        <a class="navLink" href="/add-volunteer">Add Volunteer</a>
+        <a class="navLink" href="/add-student">Add Student</a>
+        <a class="navLink" href="/new-rel">Add relationship</a>
+        <a class="navLink" href="#">Bulk entry</a>
+        
+      </nav>
+
+    </header>
+
+    <main>
+
+      <h2>Volunteer: <%= rel.volName %></h2>
+
+      <h2>Student: <%= rel.stuName %></h2>
+
+      <h2>Current relationship stage: <%= rel.stage %></h2>
+
+      <form method="POST", action="/submit-edit-rel">
+      
+        <input type="hidden" name="vol_id" value="<%= rel.vol_id %>" />
+        <input type="hidden" name="stu_id" value="<%= rel.stu_id %>" />
+        
+        <div class="form-div">
+          <label for="stage">Choose a stage to update, or remove:</label>
+          <select name="stage" class="form-block" id="stage">
+            <option value="undefined">Undefined</option>
+            <option value="connected">Connected</option>
+            <option value="building">Building</option>
+            <option value="life-on-life">Life-on-life</option>
+            <option value="REMOVE">REMOVE</option>
+          </select>
+        </div>
+
+        <button>Confirm change!</button>
+
+      </form>
+
+    </main>
+
+  </body>
+</html>
