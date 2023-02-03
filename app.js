@@ -7,11 +7,15 @@ const bodyParser = require("body-parser");
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.text({ type: 'text/csv' }));
 app.use(express.static(__dirname + "/public"));
 
 // Database setup
 const Database = require('better-sqlite3');
 const db = new Database('database/poc.db', { fileMustExist: true });
+
+// Bulk Upload Setup
+const { parse } = require('csv-parse/sync');
 
 // Routes
 app.get("/", function(req, res){
@@ -252,6 +256,37 @@ app.post("/submit-edit-rel", function(req, res){
   }
 
   res.render("upload", {msg: msg});
+});
+
+app.get("/bulk", function(req, res){
+  console.log("Bulk upload form requested.")
+  res.render("bulk");
+});
+
+app.post("/bulk-upload", function(req, res){
+  console.log("Bulk upload submitted.");
+
+  csv = req.body.csv
+  const records = parse(csv, {
+    columns: true,
+    skip_empty_lines: true
+  });
+  console.log(records);
+
+  const insVol = db.prepare("INSERT INTO volunteers (fname, lname, phone, email, street, city, usstate, church, location, team, notes, is_active) VALUES (@fname, @lname, @phone, @email, @street, @city, @usstate, @church, @location, @team, @notes, @is_active)");
+  // const insStu = db.prepare("INSERT INTO students (fname, lname, phone, email, street, city, usstate, church, school, location, team, notes, is_active, is_graduated) VALUES (@fname, @lname, @phone, @email, @street, @city, @usstate, @church, @school, @location, @team, @notes, @is_active, @is_graduated)");
+  
+  const insVolMany = db.transaction((people) => {
+      for (const person of people) insVol.run(person);
+  });
+  // const insStuMany = db.transaction((people) => {
+  //     for (const person of people) insStu.run(person);
+  // });
+  
+  insVolMany(records);
+  // insStuMany(fiftyPeople());
+
+  res.render("upload", {msg: `You successfully uploaded ${req.body.upload}`});
 });
 
 // Server
