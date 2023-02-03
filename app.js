@@ -266,27 +266,32 @@ app.get("/bulk", function(req, res){
 app.post("/bulk-upload", function(req, res){
   console.log("Bulk upload submitted.");
 
-  csv = req.body.csv
+  csv = req.body.csv;
+  type = req.body.type;
+
   const records = parse(csv, {
     columns: true,
     skip_empty_lines: true
   });
-  console.log(records);
+  console.table(records);
 
-  const insVol = db.prepare("INSERT INTO volunteers (fname, lname, phone, email, street, city, usstate, church, location, team, notes, is_active) VALUES (@fname, @lname, @phone, @email, @street, @city, @usstate, @church, @location, @team, @notes, @is_active)");
-  // const insStu = db.prepare("INSERT INTO students (fname, lname, phone, email, street, city, usstate, church, school, location, team, notes, is_active, is_graduated) VALUES (@fname, @lname, @phone, @email, @street, @city, @usstate, @church, @school, @location, @team, @notes, @is_active, @is_graduated)");
-  
-  const insVolMany = db.transaction((people) => {
-      for (const person of people) insVol.run(person);
+  let insOne;
+  let msg;
+  if (type === "vol") {
+    insOne = db.prepare("INSERT INTO volunteers (fname, lname, phone, email, street, city, usstate, church, location, team, notes, is_active) VALUES (@fname, @lname, @phone, @email, @street, @city, @usstate, @church, @location, @team, @notes, @is_active)");
+    msg = `Successfully uploaded ${req.body.upload} into the Volunteers list!`;
+  } else if (type === "stu") {
+    insOne = db.prepare("INSERT INTO students (fname, lname, phone, email, street, city, usstate, church, school, location, team, notes, is_active, is_graduated) VALUES (@fname, @lname, @phone, @email, @street, @city, @usstate, @church, @school, @location, @team, @notes, @is_active, @is_graduated)");
+    msg = `Successfully uploaded ${req.body.upload} into the Students list!`;
+  }
+
+  const insMany = db.transaction((people) => {
+    for (const person of people) insOne.run(person);
   });
-  // const insStuMany = db.transaction((people) => {
-  //     for (const person of people) insStu.run(person);
-  // });
   
-  insVolMany(records);
-  // insStuMany(fiftyPeople());
+  insMany(records);
 
-  res.render("upload", {msg: `You successfully uploaded ${req.body.upload}`});
+  res.render("upload", {msg: msg});
 });
 
 // Server

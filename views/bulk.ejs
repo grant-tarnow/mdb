@@ -29,22 +29,36 @@
 
       <h2>Bulk Upload Instructions:</h2>
 
-      <p>
-        1. Download the .csv template: TEMPLATE<br/>
-        <br/>
-        2. Open the file with excel or google sheets<br/>
-        <br/>
-        3. Edit the file, adding your data, but do not change the headers<br/>
-        <br/>
-        4. Save the file as a .csv, and upload below
-      </p>
-
       <form method="POST" action="/bulk-upload">
-        <label for="file">Choose a .csv file to upload</label>
-        <input type="file" id="file" class="form-block" name="upload" accept=".csv">
-        <input type="hidden" id="csv" name="csv">
+
+        <p>
+          1. Download the .csv template: <a href="mdb_bulk_upload - students.csv" download>Student template</a> | <a href="mdb_bulk_upload - volunteers.csv" download>Volunteers template</a><br/>
+          <br/>
+          2. Open the file with excel or google sheets.<br/>
+          <br/>
+          3. Edit the file, adding your data, but do not change the headers. The file should contain ONLY volunteers or ONLY students.<br/>
+          <br/>
+          4. Save or download the file as a .csv.<br/>
+          <br/>
+          5. Select whether your file containts Volunteers or Students.<br/>
+          <div class="form-div">
+            <input type="radio" id="vol" name="type" placeholder="" value="vol">
+            <label for="vol">Volunteers</label>
+            </br>
+            <input type="radio" id="stu" name="type" placeholder="" value="stu">
+            <label for="stu">Students</label>
+          </div>
+
+          6. Select "Browse..." and select your file.<br/>
+          <br/>
+          <label for="file">Choose a .csv file to upload</label>
+          <input type="file" id="file" class="form-block" name="upload" accept=".csv">
+          <input type="hidden" id="csv" name="csv">
         <br/>
+        </p>
+
         <button>Upload!</button>
+
       </form>
 
       <script>
