@@ -294,6 +294,31 @@ app.post("/bulk-upload", function(req, res){
   res.render("upload", {msg: msg});
 });
 
+app.post("/delete-profile", function(req, res){
+  console.log("Delete profile requested");
+
+  const type = req.body.type;
+  const id = req.body.id;
+
+  if (type === "vol") {
+    delProf = db.prepare("DELETE FROM volunteers WHERE id = ?");
+  } else if (type === "stu") {
+    delProf = db.prepare("DELETE FROM students WHERE id = ?");
+  }
+
+  const result = delProf.run(id);
+
+  let msg;
+  if (Object.keys(result).length === 2) {
+    msg = "Deletion successful!";
+  } else {
+    msg = "Oops! Something went wrong, and the deletion failed.";
+  }
+
+  res.render("upload", {msg: msg});
+
+});
+
 // Server
 app.listen(port, function(){
     console.log(`Server running on ${port}!`)

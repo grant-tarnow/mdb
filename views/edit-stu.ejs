@@ -136,6 +136,39 @@
 
         <button>Edit Person!</button>
       </form>
+      </br>
+      <button id="delprof">DELETE STUDENT</button>
+      </br>
+      <form id="secret-form" class="hidden" method="POST" action="/delete-profile">
+        <p>
+          Are you sure you want to delete this person? It will also delete all relationships associated with this person.
+          </br>
+          Consider marking the person as "inactive" instead. Deletion cannot be undone.
+        </p>
+        <input type="hidden" name="type" value="stu" />
+        <input type="hidden" name="id" value="<%= profile.id %>" />
+        <button class="nevermind">NEVERMIND</button>
+        </br>
+        </br>
+        <button class="delete">I'M SURE, DELETE STUDENT</button>
+      </form>
+
+      <script>
+        const delprof = document.getElementById("delprof");
+        const form = document.getElementById("secret-form");
+        const nvm = document.querySelector(".nevermind");
+
+        delprof.addEventListener("click", function(e){
+          e.preventDefault();
+          form.classList.remove("hidden");
+        });
+
+        nvm.addEventListener("click", function(e){
+          e.preventDefault();
+          form.classList.add("hidden");
+        });
+      
+      </script>
 
     </main>
 

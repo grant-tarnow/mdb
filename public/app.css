@@ -35,3 +35,17 @@ a {
 .form-div {
   margin-bottom: 20px;
 }
+
+.nevermind {
+  background-color: green;
+  color: white;
+}
+
+.delete {
+  background-color: red;
+  color: white;
+}
+
+.hidden {
+  display: none;
+}

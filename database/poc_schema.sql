@@ -1,6 +1,6 @@
+DROP TABLE IF EXISTS relationships;
 DROP TABLE IF EXISTS volunteers;
 DROP TABLE IF EXISTS students;
-DROP TABLE IF EXISTS relationships;
 
 CREATE TABLE volunteers (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -41,8 +41,8 @@ CREATE TABLE relationships (
     student_id INTEGER NOT NULL,
     stage TEXT DEFAULT "connected",
     PRIMARY KEY(mentor_id, student_id),
-    FOREIGN KEY(mentor_id) REFERENCES volunteers(id)
-    FOREIGN KEY(student_id) REFERENCES students(id)
+    FOREIGN KEY(mentor_id) REFERENCES volunteers(id) ON DELETE CASCADE,
+    FOREIGN KEY(student_id) REFERENCES students(id) ON DELETE CASCADE
 );
 
 -- Grab this statement for a fun test

@@ -40,9 +40,9 @@
           <label for="stage">Choose a stage to update, or remove:</label>
           <select name="stage" class="form-block" id="stage">
             <option value="undefined">Undefined</option>
-            <option value="connected">Connected</option>
-            <option value="building">Building</option>
-            <option value="life-on-life">Life-on-life</option>
+            <option value="connected" <% if (rel.stage === "connected") { %><%= "selected" %><% } %>>Connected</option>
+            <option value="building" <% if (rel.stage === "building") { %><%= "selected" %><% } %>>Building</option>
+            <option value="life-on-life" <% if (rel.stage === "life-on-life") { %><%= "selected" %><% } %>>Life-on-life</option>
             <option value="REMOVE">REMOVE</option>
           </select>
         </div>
